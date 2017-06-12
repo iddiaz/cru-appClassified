@@ -14,23 +14,84 @@
    <md-toolbar>
       <div class="md-toolbar-tools">
          <p><strong>ngClassifields</strong></p>
-         <md-button>
+         <md-button ng-click="openSidebar()">
             <md-icon class="mdi mdi-plus-circle"></md-icon>
             New Classified
          </md-button>
       </div>
    </md-toolbar>
 
+   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" >
+      <md-toolbar>
+         <h1 class="md-toolbar-tools">Add a CLassified</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+         <form>
+            <md-input-container>
+               <label for="title">Title</label>
+               <input type="text" id="title" md-autofocus ng-model="classified.title">
+            </md-input-container>
+
+            <md-input-container>
+               <label for="price">Price</label>
+               <input type="text" id="price" ng-model="classified.price">
+            </md-input-container>
+
+            <md-input-container>
+               <label for="description">Description</label>
+               <textarea type="text" id="description" ng-model="classified.description"></textarea>
+            </md-input-container>
+
+            <md-input-container>
+               <label for="image">Image Link</label>
+               <input type="text" id="image" ng-model="classified.image">
+            </md-input-container>
+
+            <md-button class="md-primary" ng-click="saveClassified(classified)" ng-if="!editing">Save</md-button>
+            <md-button class="md-primary" ng-if="editing" ng-click="saveEdit()">Save Edit</md-button>
+            <md-button class="md-warn" ng-click="closeSidebar()">Cancel</md-button>
+            <pre>{{classified | json }}</pre>
+         </form>
+
+      </md-content>
+   </md-sidenav>
+
    <md-content class="md-padding" layout="row" layout-wrap>
       <md-card flex="30" ng-repeat="classified in classifieds">
          <img ng-src="{{classified.image}}" alt=""/>
          <md-card-content>
-            <div class="Classified-info">
+            <div class="classified-info" ng-show="!showContact">
                <h2 class="md-title">{{classified.title}}</h2>
                <h2>{{classified.posted | date: 'longDate'}}</h2>
                <h3>{{classified.price | currency }}</h3>
-               <p>{{classified.description | uppercase}}</p>
-               
+               <p>{{classified.description }}</p>               
+            </div>
+            <div class="classified-contact" ng-show="showContact">
+               <p><md-icon class="mdi mdi-account"></md-icon>{{classified.contact.name}}</p>
+               <p><md-icon class="mdi mdi-phone"></md-icon>{{classified.contact.phone}}</p>
+               <p><md-icon class="mdi mdi-email"></md-icon>{{classified.contact.email}}</p>
+            </div>
+
+            <div layout="row">
+               <md-button ng-click="showContact = true"
+                          ng-show="!showContact">Contact
+               </md-button>
+               <md-button ng-click="showContact = false"
+                          ng-show="showContact" >Deatails
+               </md-button>
+               <md-button ng-click="showAdmin = true"
+                         ng-show="!showAdmin">Admin
+               </md-button>
+               <md-button ng-click="showAdmin = false"
+                          ng-show="showAdmin">CLose</md-button>
+            </div>
+
+            <div class="classified-admin" ng-if="showAdmin">
+               <h3>Admin</h3>
+               <div layout="row">
+                  <md-button class="md-primary" ng-click="editClassified(classified)">Edit</md-button>
+                  <md-button class="md-warn" ng-click="deleteClassified($event, classified)">Delete</md-button>
+               </div>
             </div>
          </md-card-content>
       </md-card>
@@ -51,6 +112,9 @@
 
    <!--controllers-->
    <script src="./scripts/components/classifields.controller.js"></script>
+
+   <!--services-->
+   <script src="./scripts/components/classifieds.fac.js"></script>
 
 
 </body>

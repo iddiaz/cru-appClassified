@@ -9,7 +9,8 @@ angular.module('ngClassifields', ['ngMaterial', 'ui.router'])
       $stateProvider
          .state('one', {
             url: '/stateone',
-            template: '<h1>State One</h1>'
+            template: '<h1>{{stateone.message}}</h1>',
+            controller: 'stateOneCtrl as stateone'
          })
          .state('two', {
             url: '/statetwo',
@@ -20,6 +21,10 @@ angular.module('ngClassifields', ['ngMaterial', 'ui.router'])
             template: '<p>this is the deeper state</p>'
          })
 
+   })
+   .controller('stateOneCtrl', function(){
+      var vm = this;
+      vm.message =  'Hey from state one';
    })
    .directive('helloWorld', function(){
       return {

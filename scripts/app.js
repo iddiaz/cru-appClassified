@@ -1,8 +1,9 @@
 angular.module('ngClassifields', ['ngMaterial'])
    .config(function($mdThemingProvider){
       $mdThemingProvider.theme('default')
-      .primaryPalette('green')
-      .accentPalette('orange')
+      // .dark();
+      // .primaryPalette('green')
+      // .accentPalette('orange')
    })
    .directive('helloWorld', function(){
       return {

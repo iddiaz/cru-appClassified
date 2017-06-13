@@ -18,8 +18,37 @@
             <md-icon class="mdi mdi-plus-circle"></md-icon>
             New Classified
          </md-button>
+         <md-button ng-click="showFilters = true">
+            <md-icon class="mdi mdi-magnify"></md-icon>
+            FIlters
+         </md-button>
       </div>
    </md-toolbar>
+
+   <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
+      <md-input-container class="categorySearch">
+         <label>Enter Search Term</label>
+         <input ng-model="classifiedsFilter">
+      </md-input-container>
+      
+
+      <md-input-container class="category">
+         <label>Category</label>
+         <md-select ng-model="category">
+            <md-option ng-repeat="category in categories" value="{{category}}">
+               {{category}}
+            </md-option>
+         </md-select>
+      </md-input-container>
+
+      <md-input-container>         
+         <md-button class="md-warn" 
+                    ng-click="classifiedsFilter = ''; category = ''">
+            Clear
+         </md-button>
+      </md-input-container>
+
+   </div>
 
    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" >
       <md-toolbar>
@@ -57,7 +86,9 @@
    </md-sidenav>
 
    <md-content class="md-padding" layout="row" layout-wrap>
-      <md-card flex="30" ng-repeat="classified in classifieds">
+      <md-card flex="30" ng-repeat="classified in classifieds |
+                                    filter: classifiedsFilter |
+                                    filter: category ">
          <img ng-src="{{classified.image}}" alt=""/>
          <md-card-content>
             <div class="classified-info" ng-show="!showContact">
@@ -115,6 +146,8 @@
 
    <!--services-->
    <script src="./scripts/components/classifieds.fac.js"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
 
 </body>

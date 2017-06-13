@@ -3,80 +3,94 @@
 
    angular
       .module('ngClassifields')
-      .controller('classifieldCtrl', ['$scope', '$http', 'classifiedsFactory','$mdSidenav','$mdToast', '$mdDialog',
-         function ($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog ) {
-         
-         var contact = {
-            name: 'Ivan Diaz',
-            phone: '(555) 555-555',
-            email: 'correo@ivandazdiaz.com'
-         }
-         
-         classifiedsFactory.getClassifieds().then(function(res){
-            $scope.classifieds = res.data;
-            // console.log(res);
-         });
+      .controller('classifieldCtrl', ['$scope', '$http', 'classifiedsFactory', '$mdSidenav', '$mdToast', '$mdDialog',
+         function ($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 
-         
-         $scope.openSidebar = function (){
-            $mdSidenav('left').open();
-         }
-         $scope.closeSidebar = function (){
-            $mdSidenav('left').close();
-         }
+            var contact = {
+               name: 'Ivan Diaz',
+               phone: '(555) 555-555',
+               email: 'correo@ivandazdiaz.com'
+            }
 
-         $scope.saveClassified = function( classified ){
-            if(classified){
-               classified.contact = contact;
-               $scope.classifieds.push( classified );
+
+            classifiedsFactory.getClassifieds().then(function (res) {
+               $scope.classifieds = res.data;
+                $scope.categories = getCategories($scope.classifieds);
+               // console.log(res);
+            });
+
+
+            $scope.openSidebar = function () {
+               $mdSidenav('left').open();
+            }
+            $scope.closeSidebar = function () {
+               $mdSidenav('left').close();
+            }
+
+            $scope.saveClassified = function (classified) {
+               if (classified) {
+                  classified.contact = contact;
+                  $scope.classifieds.push(classified);
+                  $scope.classified = {};
+                  $scope.closeSidebar();
+                  showToast('Classified Save!')
+
+               };
+            }
+
+            $scope.editClassified = function (classified) {
+               $scope.editing = true;
+               $scope.openSidebar();
+               $scope.classified = classified;
+            }
+
+            $scope.saveEdit = function () {
+               $scope.editing = false;
                $scope.classified = {};
                $scope.closeSidebar();
-               showToast('Classified Save!')
-               
-            };
-         }
+               showToast('Edit Save!')
+            }
 
-         $scope.editClassified = function ( classified ){
-            $scope.editing = true;
-            $scope.openSidebar();
-            $scope.classified = classified;
-         }
+            $scope.deleteClassified = function (event, classified) {
 
-         $scope.saveEdit = function (){
-            $scope.editing = false;
-            $scope.classified = {};
-            $scope.closeSidebar();
-            showToast('Edit Save!')
-         }
+               var confirm = $mdDialog.confirm()
+                  .title('Are you sure you want to delete' + classified.title + '?')
+                  .ok('Yes')
+                  .cancel('No')
+                  .targetEvent(event);
 
-         $scope.deleteClassified = function( event, classified ){
+               $mdDialog.show(confirm).then(function () {
+                  var index = $scope.classifieds.indexOf(classified);
+                  $scope.classifieds.splice(index, 1);
 
-            var confirm = $mdDialog.confirm()
-               .title('Are you sure you want to delete' + classified.title + '?')
-               .ok('Yes')
-               .cancel('No')
-               .targetEvent(event);
-            
-            $mdDialog.show(confirm).then(function(){
-               var index = $scope.classifieds.indexOf( classified );
-               $scope.classifieds.splice( index, 1 );
+               }, function () {
+                  //case no
+               })
 
-            }, function(){
-               //case no
-            })
-          
-         }
+            }
 
-         function showToast(message){
-            $mdToast.show(
-               $mdToast.simple()
-                  .content(message)
-                  .position('top, right')
-                  .hideDelay(3000)
-            );
-         }
+            function showToast(message) {
+               $mdToast.show(
+                  $mdToast.simple()
+                     .content(message)
+                     .position('top, right')
+                     .hideDelay(3000)
+               );
+            }
 
-      }]);
+            function getCategories(classifieds) {
+               var categories = [];
+               angular.forEach(classifieds, function (item) {
+                  angular.forEach(item.categories, function(category){
+                     categories.push(category);
+
+                  });
+               });
+               //libreria lodash retorna la categoria que se necesita
+               return _.uniq(categories);
+            }
+
+         }]);
 
 
 })();

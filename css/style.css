@@ -1,3 +1,7 @@
 button .material-icons {
    margin-top: -12px;
 }
+
+md-input-container.categorySearch {
+   top: 12px;
+}

@@ -12,6 +12,11 @@ angular.module('ngClassifields', ['ngMaterial', 'ui.router'])
             templateUrl: 'scripts/components/classifieds/classifieds.tpl.html',
             controller: 'classifiedsCtrl as vm'
          })
+         .state('classifieds.new', {
+            url: '/new',
+            templateUrl: 'scripts/components/classifieds/new/classifieds.new.tpl.html',
+            controller: 'newClassifiedsCtrl as vm'
+         })
 
    })
   

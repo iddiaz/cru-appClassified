@@ -3,8 +3,8 @@
 
    angular
       .module('ngClassifields')
-      .controller('classifiedsCtrl', ['$scope', '$http', 'classifiedsFactory', '$mdSidenav', '$mdToast', '$mdDialog',
-         function ($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
+      .controller('classifiedsCtrl', ['$scope', '$http', '$state', 'classifiedsFactory', '$mdSidenav', '$mdToast', '$mdDialog',
+         function ($scope, $http, $state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 
             var vm = this;
             
@@ -32,7 +32,7 @@
             }
 
             function openSidebar() {
-               $mdSidenav('left').open();
+               $state.go('classifieds.new');
             }
             function closeSidebar() {
                $mdSidenav('left').close();

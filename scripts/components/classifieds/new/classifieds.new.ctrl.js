@@ -11,6 +11,7 @@
       var vm = this;
       //hace conocida la funcion del controlador en el template
       vm.closeSidebar = closeSidebar;
+      vm.saveClassified = saveClassified;
 
       //Uso $timeout para poder hacer un callback y llamar al sservicio $mdSidenav para que abra el submenu una vez ejecutado el componente,
       //si no diria que no lo encuentra, ya qye no existe el tpl cargado en el momento de llamar al servicio de submenu.
@@ -45,12 +46,30 @@
          vm.sidenavOpen = false;
       }
 
+      //ejemplo de emision de dato
+      // vm.sendMessage = function(){
+      //    $scope.$emit('myMessage', 'Hey how are you?')
+      // }
+
+      function saveClassified( classified ) {
+         
+         if( classified ) {
+             
+            classified.contact = {
+               name: 'Ivan Diaz',
+               phone: '(555) 555-555',
+               email: 'correo@ivandazdiaz.com'
+            }
+
+            $scope.$emit('newClassified', classified );
+            vm.sidenavOpen = false;
+         }
+      }
+
+
+
       
 
-      activate();
-
-      ////////////////
-
-      function activate() { }
+   
    }
 })();

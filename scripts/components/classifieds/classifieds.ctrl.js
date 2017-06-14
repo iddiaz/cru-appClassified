@@ -7,6 +7,11 @@
          function ($scope, $http, $state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 
             var vm = this;
+
+            // //Emiting data options
+            // $scope.$on
+            // $scope.$broadcast
+            // $scope.$emit
             
             vm.categories;
             vm.classified;
@@ -23,6 +28,17 @@
                vm.classifieds = res.data;
                 vm.categories = getCategories(vm.classifieds);
                // console.log(res);
+            });
+
+            //ejemplo de recepción del valor comunicado
+            // $scope.$on('myMessage', function(event, message){
+            //       console.log(message);
+            // })
+
+            $scope.$on('newClassified', function(event, classified){
+               classified.id = vm.classifieds.length + 1;
+               vm.classifieds.push(classified);
+               showToast('classified saved!');
             });
 
             var contact = {

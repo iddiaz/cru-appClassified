@@ -30,6 +30,10 @@
                // console.log(res);
             });
 
+            $http.get('https://api.github.com/users').then(function(res){
+               console.log(res);
+            })
+
             //ejemplo de recepción del valor comunicado
             // $scope.$on('myMessage', function(event, message){
             //       console.log(message);
@@ -39,6 +43,10 @@
                classified.id = vm.classifieds.length + 1;
                vm.classifieds.push(classified);
                showToast('classified saved!');
+            });
+
+            $scope.$on('editSaved', function(event, message){
+               showToast(message)
             });
 
             var contact = {
@@ -66,9 +74,14 @@
             }
 
             function editClassified (classified) {
-               vm.editing = true;
-               openSidebar();
-               vm.classified = classified;
+               // vm.editing = true;
+               // openSidebar();
+               // vm.classified = classified;
+               $state.go('classifieds.edit', {
+                  id: classified.id,
+                  classified: classified
+               });
+               
             }
 
             function saveEdit() {

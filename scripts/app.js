@@ -17,6 +17,14 @@ angular.module('ngClassifields', ['ngMaterial', 'ui.router'])
             templateUrl: 'scripts/components/classifieds/new/classifieds.new.tpl.html',
             controller: 'newClassifiedsCtrl as vm'
          })
+         .state('classifieds.edit', {
+            url: '/edit/:id',
+            templateUrl: 'scripts/components/classifieds/edit/classifieds.edit.tpl.html',
+            controller: 'editClassifiedsCtrl as vm',
+            params: {
+                  classified: null
+            }
+         })
 
    })
   

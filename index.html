@@ -24,7 +24,7 @@
    <script src="./node_modules/angular-ui-router/release/angular-ui-router.js"></script>
 
    <!--Firebase-->
-  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
 
   <!-- AngularFire -->
   <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
@@ -40,7 +40,23 @@
    <!--services-->
    <script src="./scripts/components/classifieds/classifieds.fac.js"></script>
 
+   <!--directives-->
+   <script src="./scripts/components/classifieds/card/classified-card.dir.js"></script>
+
    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+   <script>
+    // Initialize the Firebase SDK
+    var config = {
+      apiKey: "AIzaSyC-4bspClwflZQ-QqvBrM5XGt2ybTwSkCc",
+      authDomain: "ngclassifieds-c1ed8.firebaseapp.com",
+      databaseURL: "https://ngclassifieds-c1ed8.firebaseio.com",
+      projectId: "ngclassifieds-c1ed8",
+      storageBucket: "ngclassifieds-c1ed8.appspot.com",
+      messagingSenderId: "273514268895"
+    };
+    firebase.initializeApp(config);
+  </script>
 
 
 </body>

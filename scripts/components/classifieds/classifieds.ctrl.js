@@ -30,9 +30,9 @@
                // console.log(res);
             });
 
-            $http.get('https://api.github.com/users').then(function(res){
-               console.log(res);
-            })
+            // $http.get('https://api.github.com/users').then(function(res){
+            //    console.log(res);
+            // })
 
             //ejemplo de recepción del valor comunicado
             // $scope.$on('myMessage', function(event, message){
